@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revolución</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
+      width: 100%;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* --- SECCIÓN 1 --- */
+    #section1 {
+      height: 100vh;
+      width: 100%;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://i.pinimg.com/736x/a0/d0/aa/a0d0aa510e08ff5c18dcdba83c461ea3.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Botón Impact en Rojo */
+    .btn-revolution {
+      background-color: #E50914;
+      color: #FFFFFF;
+      border: 2px solid #FFFFFF;
+      border-radius: 4px;
+      padding: 18px 32px;
+      font-family: 'Impact', 'Arial Black', sans-serif-condensed, sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+      width: 100%;
+      max-width: 340px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-revolution:hover {
+      background-color: #B20710;
+      transform: scale(1.03);
+    }
+
+    /* --- SECCIÓN 2 --- */
+    #section2 {
+      display: none;
+      min-height: 100vh;
+      width: 100%;
+      background-color: #eceaed;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><polygon points="15,2 18,10 27,10 20,15 22,23 15,18 8,23 10,15 3,10 12,10" fill="%23e50914" opacity="0.35"/><polygon points="85,45 87,51 94,51 89,55 91,61 85,57 79,61 81,55 76,51 83,51" fill="%23e50914" opacity="0.3"/><polygon points="40,85 42,91 49,91 44,95 46,101 40,97 34,101 36,95 31,91 38,91" fill="%23e50914" opacity="0.35"/></svg>');
+      background-size: 140px 140px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Cartel Superior Negro */
+    .header-banner {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #000000;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+      z-index: 5;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      width: 85%;
+      max-width: 360px;
+    }
+
+    /* Botón flotante para la Música */
+    .music-btn {
+      position: fixed;
+      top: 20px;
+      right: 15px;
+      z-index: 50;
+      background-color: #000000;
+      color: #ffffff;
+      border: 2px solid #E50914;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Área donde flotan las imágenes */
+    .floating-container {
+      position: absolute;
+      top: 90px;
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 90px);
+    }
+
+    /* Estilo de las imágenes flotantes */
+    .floating-img {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #e50914;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: floatAnimation 12s ease-in-out infinite alternate;
+    }
+
+    .floating-img:hover, .floating-img:active {
+      transform: scale(1.15);
+      box-shadow: 0 6px 15px rgba(229, 9, 20, 0.5);
+      z-index: 4;
+    }
+
+    /* Estrella Verde Militar en el centro */
+    .center-star {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      cursor: pointer;
+      filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.4));
+      transition: transform 0.2s ease;
+      animation: pulseGreen 3s ease-in-out infinite alternate;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .center-star:hover, .center-star:active {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+
+    @keyframes pulseGreen {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      100% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    @keyframes floatAnimation {
+      0% { transform: translate(0px, 0px) rotate(0deg); }
+      33% { transform: translate(25px, -35px) rotate(5deg); }
+      66% { transform: translate(-20px, 25px) rotate(-5deg); }
+      100% { transform: translate(15px, -15px) rotate(3deg); }
+    }
+
+    /* --- MODALES / CUADROS DE TEXTO --- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(3px);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background-color: #E50914;
+      color: #FFFFFF;
+      padding: 30px 25px 25px 25px;
+      border-radius: 12px;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Estilo para el cuadro verde militar */
+    .modal-box.green-modal {
+      background-color: #4B5320;
+      border: 2px solid #8B9458;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      color: #FFFFFF;
+      font-size: 1.6rem;
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 1;
+      padding: 5px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .modal-text {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    /* Botón / Ícono de WhatsApp / Carta */
+    .chat-link-icon {
+      display: inline-block;
+      margin-top: 18px;
+      font-size: 2rem;
+      color: #ffffff;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 8px 18px;
+      border-radius: 50px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .chat-link-icon:hover, .chat-link-icon:active {
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUDIO -->
+  <audio id="bgMusic" loop>
+    <source src="cancion.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- BOTÓN DE MÚSICA -->
+  <button class="music-btn" id="musicToggleBtn" onclick="toggleMusic()">🎵</button>
+
+  <!-- SECCIÓN 1 -->
+  <section id="section1">
+    <button class="btn-revolution" onclick="goToSection2()">
+      ¡Bienvenido, camarada!
+    </button>
+  </section>
+
+  <!-- SECCIÓN 2 -->
+  <section id="section2">
+    <div class="header-banner">
+      Toca en cualquier imagen
+    </div>
+
+    <!-- ESTRELLA VERDE MILITAR EN EL CENTRO DE LA PANTALLA -->
+    <div class="center-star" onclick="openGreenModal()">
+      <svg width="60" height="60" viewBox="0 0 100 100">
+        <polygon points="50,5 64,36 98,36 70,57 81,91 50,70 19,91 30,57 2,36 36,36" fill="#4B5320" stroke="#313714" stroke-width="3"/>
+      </svg>
+    </div>
+
+    <div class="floating-container" id="floatingArea">
+      <!-- Imágenes flotantes -->
+    </div>
+  </section>
+
+  <!-- MODAL ROJO (FRASES) -->
+  <div class="modal-overlay" id="textModal">
+    <div class="modal-box" id="modalBox">
+      <button class="close-btn" onclick="closeModal()">✕</button>
+      <p class="modal-text" id="quoteText"></p>
+      <div id="extraContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const items = [
+      {
+        img: 'https://i.pinimg.com/736x/9a/04/74/9a04742282f949e1ec1e8299f3941a0a.jpg',
+        quote: '“Vámonos patria a caminar, yo te acompaño. Yo bajaré los abismos que me digas. Yo beberé tus cálices amargos.” — Otto René Castillo'
+      },
+      {
+        img: 'https://i.pinimg.com/736x/6e/7a/f6/6e7af67948a455f05a81c017f9af5716.jpg',
+        quote: '“Superarán otros hombres este momento gris y amargo donde la traición pretende imponerse. Sigan ustedes sabiendo que, mucho más temprano que tarde, de nuevo se abrirán las grandes alamedas por donde pase el hombre libre, para construir una sociedad mejor.” — Salvador Allende (Último discurso, 11 de septiembre de 1973)'
+      },
+      {
+        img: 'https://i.pinimg.com/1200x/3d/c6/ab/3dc6abf729b066ad1a8966c889923b7e.jpg',
+        quote: '"Quiero amarte, quiero que reine entre nosotros esa atmósfera dulce, confiada, ideal, como era entonces." — Carta de Rosa Luxemburgo a Leo Jogiches, 16 de julio de 1897'
+      },
+      {
+        img: 'https://i.pinimg.com/736x/17/d9/3a/17d93a3d3999a9c9bb59a29cb441dd8a.jpg',
+        quote: '“Déjeme decirle, a riesgo de parecer ridículo, que el revolucionario verdadero está guiado por grandes sentimientos de amor. Es imposible pensar en un revolucionario auténtico sin esta cualidad.” — El socialismo y el hombre en Cuba.'
+      },
+      {
+        img: 'https://i.pinimg.com/736x/f3/52/24/f35224684dcfb62384ad8f394136484d.jpg',
+        quote: '"Eso que se llama amor a la Patria es una materia prima espiritual que produce mucha más energía que el uranio y el hidrógeno"'
+      },
+      {
+        img: 'https://i.pinimg.com/736x/26/d7/f1/26d7f12b2781d19add316301639fb73c.jpg',
+        quote: '"Luchar por la revolución socialista en la América no es una utopía de locos o fanáticos, es luchar por el próximo paso de avance de la historia." — Julio Antonio Mella'
+      },
+      {
+        img: 'https://i.pinimg.com/736x/62/61/e8/6261e8ad0732aed9cb954f415beba426.jpg',
+        quote: '"Sangre son mis palabras y herida está mi alma al contemplar la Universidad como está hoy" — Julio Antonio Mella'
+      },
+      {
+        img: 'https://i.pinimg.com/736x/b0/e5/0c/b0e50c0c761a360510301b70e23a4e5f.jpg',
+        quote: '"El mundo universitario tiene la responsabilidad de jugar su vida a favor de nuestro continente, para que las masas pisoteadas de nuestros pueblos puedan tener una aventura mejor"'
+      },
+      {
+        img: 'https://i.pinimg.com/1200x/58/c4/16/58c4168dc7adde617a282d1f6a0084c2.jpg',
+        quote: '"La lucha es la vida, y la vida es la lucha... la lucha es el camino eterno de la vida"'
+      },
+      {
+        img: 'https://i.pinimg.com/736x/32/ea/38/32ea3842fa844a495f1fd3da1959d638.jpg',
+        quote: '"Todos los días hay que luchar porque ese amor a la humanidad viviente se transforme en hechos concretos, en actos que sirvan de ejemplo, de movilización"'
+      },
+      {
+        img: 'https://i.pinimg.com/736x/1d/60/90/1d60907228326d56c0c5e20847b6c9a6.jpg',
+        quote: '"Y que mis venas no terminan en mí sino en la sangre unánime de los que luchan por la vida, el amor, las cosas, el paisaje y el pan, la poesía de todos." — Roque Dalton'
+      },
+      {
+        img: 'https://i.pinimg.com/736x/7d/1f/39/7d1f39ce71e78e0cb3c474de54a31d2b.jpg',
+        quote: '"El amor de mi hombre no querrá rotularme y etiquetarme, me dará aire, espacio, alimento para crecer y ser mejor, como una revolución que hace de cada día el comienzo de una nueva victoria." — Gioconda Belli'
+      },
+      {
+        img: 'https://i.pinimg.com/736x/11/80/54/118054d9a8995be1dd08934ff7a04425.jpg',
+        quote: '"El hombre que me ame reconocerá mi rostro en la trinchera / rodilla en tierra me amará / mientras disparamos juntos contra el enemigo" — Gioconda Belli'
+      }
+    ];
+
+    const audio = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicToggleBtn');
+
+    function goToSection2() {
+      const s1 = document.getElementById('section1');
+      const s2 = document.getElementById('section2');
+
+      audio.play().then(() => {
+        musicBtn.style.display = 'flex';
+      }).catch(err => console.log("Audio:", err));
+
+      s1.style.opacity = '0';
+      setTimeout(() => {
+        s1.style.display = 'none';
+        s2.style.display = 'block';
+        setTimeout(() => {
+          s2.style.opacity = '1';
+          initFloatingImages();
+        }, 50);
+      }, 500);
+    }
+
+    function toggleMusic() {
+      if (audio.paused) {
+        audio.play();
+        musicBtn.innerText = '🎵';
+      } else {
+        audio.pause();
+        musicBtn.innerText = '🔇';
+      }
+    }
+
+    function initFloatingImages() {
+      const container = document.getElementById('floatingArea');
+      container.innerHTML = '';
+
+      const containerWidth = container.clientWidth - 90;
+      const containerHeight = container.clientHeight - 90;
+
+      items.forEach((item, index) => {
+        const img = document.createElement('img');
+        img.src = item.img;
+        img.className = 'floating-img';
+        img.alt = `Imagen ${index + 1}`;
+
+        const randomX = Math.random() * containerWidth;
+        const randomY = Math.random() * containerHeight;
+        
+        const randomDelay = (Math.random() * -12).toFixed(2);
+        const randomDuration = (10 + Math.random() * 8).toFixed(2);
+
+        img.style.left = `${Math.max(10, randomX)}px`;
+        img.style.top = `${Math.max(10, randomY)}px`;
+        img.style.animationDelay = `${randomDelay}s`;
+        img.style.animationDuration = `${randomDuration}s`;
+
+        img.onclick = () => openRedModal(item.quote);
+
+        container.appendChild(img);
+      });
+    }
+
+    // Modal para las imágenes (Rojo)
+    function openRedModal(quote) {
+      const modalBox = document.getElementById('modalBox');
+      modalBox.classList.remove('green-modal');
+      document.getElementById('quoteText').innerText = quote;
+      document.getElementById('extraContent').innerHTML = '';
+      document.getElementById('textModal').style.display = 'flex';
+    }
+
+    // Modal para la estrella verde militar del centro
+    function openGreenModal() {
+      const modalBox = document.getElementById('modalBox');
+      modalBox.classList.add('green-modal');
+      document.getElementById('quoteText').innerText = "Hola, soy en un caos permanente, pero no quería dejar de molestarte <3. Estoy en época de parciales, pero el sábado que viene hay una tal marcha de la bronca o algo así (publicidad pautada para aprender hacer esto). Te quiero y te extraño.";
+      
+      // Ícono de carta / celular con link a WhatsApp
+      document.getElementById('extraContent').innerHTML = `
+        <a href="https://wa.me/5491170617351" target="_blank" class="chat-link-icon" title="Enviar mensaje">
+          ✉️ 📱
+        </a>
+      `;
+      document.getElementById('textModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('textModal').style.display = 'none';
+    }
+
+    document.getElementById('textModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+  </script>
+
+</body>
+</html>
